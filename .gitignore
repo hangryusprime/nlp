@@ -70,6 +70,7 @@ coverage.xml
 data/
 data_in/
 data_out/
+training/
 
 # Django stuff:
 *.log
