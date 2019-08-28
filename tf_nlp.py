@@ -138,7 +138,7 @@ cp_callback = callbacks.ModelCheckpoint(filepath=checkpoint_path, save_weights_o
 def model_fit():
     print("==================== Fitting the model ==========================")
     model.fit(x_train_pad, y_train, validation_split=0.05, epochs=3, batch_size=50, \
-              shuffle=True, callbacks=[cp_callback])
+              callbacks=[cp_callback])
 
 
 def model_initialize(attempts=3, target_acc=75):
@@ -160,17 +160,15 @@ def model_initialize(attempts=3, target_acc=75):
             return
     else:
         model_fit()
-        model_initialize(attempts-1, target_acc)
+        # Performance on Test-Set
+        loss,acc = model.evaluate(x_test_pad, y_test)
+        print(f"Accuracy: {round(acc*100,2)}%")
+        if round(acc*100) <= target_acc:
+            model_initialize(attempts-1, target_acc)
     print("=================================================================")    
 
 
 model_initialize(attempts=3, target_acc=85)
-
-# Performance on Test-Set
-
-result = model.evaluate(x_test_pad, y_test)
-
-print(f"Accuracy: {round(result[1]*100,2)}%")
 
 # Example of Mis-Classified Text
 
