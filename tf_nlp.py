@@ -3,6 +3,8 @@ import tensorflow as tf
 import numpy as np
 import os
 import glob
+import pydot
+import graphviz
 
 from scipy.spatial.distance import cdist
 from tensorflow.python.keras import callbacks
@@ -11,6 +13,7 @@ from tensorflow.python.keras.layers import Dense, GRU, Embedding
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.utils.vis_utils import plot_model
 from src import imdb
 
 
@@ -169,6 +172,9 @@ def model_initialize(attempts=3, target_acc=75):
 
 
 model_initialize(attempts=3, target_acc=85)
+
+plot_model(model, to_file='model.png',\
+           show_shapes=True, show_layer_names=True)
 
 # Example of Mis-Classified Text
 
